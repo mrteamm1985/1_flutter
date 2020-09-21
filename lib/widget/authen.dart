@@ -15,7 +15,7 @@ bool statusRedEye =true;
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-  
+        child: SingleChildScrollView(
                   child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -23,10 +23,20 @@ bool statusRedEye =true;
             buildText(), 
             buildContainerTextF(),
             buildContainerTextFPass(),
+            buildContainerBtnLogin(),
               ],
           ),
         ),
+      ),
     );
+  }
+
+  Container buildContainerBtnLogin() {
+    return Container(
+          margin: EdgeInsets.only(top:16),
+          width: 250,
+          child: RaisedButton(onPressed: null,child: Text('Login'),),
+          );
   }
   
 
@@ -38,7 +48,7 @@ bool statusRedEye =true;
     );
 
    Container buildContainerTextFPass() =>  Container(margin: EdgeInsets.only(top:26),
-    width: 250,child: TextField(obscureText: true,
+    width: 250,child: TextField(obscureText: statusRedEye,
     decoration: InputDecoration(labelText: 'Pass Word',
     border: OutlineInputBorder(),
     suffixIcon: IconButton(
