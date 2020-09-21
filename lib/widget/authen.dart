@@ -8,7 +8,7 @@ class Authen extends StatefulWidget {
 
 class _AuthenState extends State<Authen> {
 
-bool statusRedeye =true;
+bool statusRedEye =true;
 
 
   @override
@@ -41,7 +41,13 @@ bool statusRedeye =true;
     width: 250,child: TextField(obscureText: true,
     decoration: InputDecoration(labelText: 'Pass Word',
     border: OutlineInputBorder(),
-    suffixIcon: IconButton(icon: icon.re, onPressed: )
+    suffixIcon: IconButton(
+              icon: Icon(Icons.remove_red_eye),
+              onPressed: () {
+                setState(() {
+                  statusRedEye = !statusRedEye;
+                });
+              }),
     ),
     //suff
     )
