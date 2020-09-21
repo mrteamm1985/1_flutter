@@ -14,29 +14,47 @@ bool statusRedEye =true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-                  child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-            buildContainer(), 
-            buildText(), 
-            buildContainerTextF(),
-            buildContainerTextFPass(),
-            buildContainerBtnLogin(),
-              ],
+      body: Container(
+        decoration: BoxDecoration(gradient: RadialGradient(center: Alignment(0, -0.5),
+          radius:1.0,
+        colors: [Colors.white,Colors.lime],)),
+        child: Center(
+          child: SingleChildScrollView(
+                    child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+              buildContainer(), 
+              buildText(), 
+              buildContainerTextF(),
+              buildContainerTextFPass(),
+              buildContainerBtnLogin(),
+              buildFlatButtonReg(),
+                ],
+            ),
           ),
         ),
       ),
     );
   }
 
+  FlatButton buildFlatButtonReg() => 
+    FlatButton(onPressed: (){}, 
+  child: Text('New Reg',style: TextStyle(color:Colors.pink),),
+  );
+
   Container buildContainerBtnLogin() {
     return Container(
-          margin: EdgeInsets.only(top:16),
-          width: 250,
-          child: RaisedButton(onPressed: null,child: Text('Login'),),
-          );
+      margin: EdgeInsets.only(top: 16),
+      width: 250,
+      child: RaisedButton(
+        color: Colors.purple.shade700,
+        onPressed: () {},
+        child: Text(
+          'Login',
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
   
 
