@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hello/widget/register.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -38,7 +39,11 @@ bool statusRedEye =true;
   }
 
   FlatButton buildFlatButtonReg() => 
-    FlatButton(onPressed: (){}, 
+    FlatButton(onPressed: (){
+      Navigator.push(
+        context,MaterialPageRoute(builder: (context) => Register(),)
+            );
+    }, 
   child: Text('New Reg',style: TextStyle(color:Colors.pink),),
   );
 
