@@ -2,10 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+   <key>NSPhotoLibraryUsageDescription</key>
+      <string>Req Acccess Cam For Register</string>
+	   <key>NSCameraUsageDescription</key>
+      <string>Req Acccess Cam For Register</string>
+	     <key>NSMicrophoneUsageDescription</key>
+      <string>Req Acccess Cam For Register</string>
    <key>NSLocationWhenInUseUsageDescription</key>
    <string>Req Acccess GPS Location For Register</string>
    <key>NSLocationAlwaysUsageDescription</key>
    <string>Req Acccess GPS Location For Register</string>
+   <key>io.flutter.embedded_views_preview</key>
+    <true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
