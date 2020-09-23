@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hello/utility/normal_dialog.dart';
@@ -22,7 +24,7 @@ class _RegisterState extends State<Register> {
     'Back End',
     'Full Stack'
   ];
-  String choosePosition, name, user, password;
+  String choosePosition, name, user, password, uid, urlPath;
   double lat, lng;
   File file;
 
@@ -158,6 +160,7 @@ class _RegisterState extends State<Register> {
     return Container(
         width: 250,
         child: TextField(
+          keyboardType: TextInputType.emailAddress,
           onChanged: (value) => user = value.trim(),
           decoration: InputDecoration(
             hintText: 'User Name',
@@ -244,13 +247,32 @@ class _RegisterState extends State<Register> {
     } else if (choosePosition == null) {
       normalDialog(context, 'Pls กรอกข้อมูลให้ครบนะครับ Position');
     } else {
-      uploadThread();
+      createAccount();
     }
   }
 
-  Future<Null> uploadThread() async {
-    await Firebase.initializeApp().then((value) {
-      print('Success Connaect');
+  Future<Null> createAccount() async {
+    await Firebase.initializeApp().then((value) async {
+      print('Success Connect');
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: user, password: password)
+          .then((value) {
+        uid = value.user.uid;
+        print('Uid = $uid');
+        uploadImageThread();
+      }).catchError((value) {
+        String string = value.message;
+        normalDialog(context, string);
+      });
     });
+  }
+
+  Future<Null> uploadImageThread() async {
+    String nameImage = '$uid.jpg';
+    StorageReference reference =
+        FirebaseStorage.instance.ref().child('Avatar/$nameImage');
+    StorageUploadTask task = reference.putFile(file);
+    urlPath = await (await task.onComplete).ref.getDownloadURL();
+    print('Url Path=$urlPath');
   }
 }
