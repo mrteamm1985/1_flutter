@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hello/utility/normal_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
@@ -20,7 +21,7 @@ class _RegisterState extends State<Register> {
     'Back End',
     'Full Stack'
   ];
-  String choosePosition;
+  String choosePosition, name, user, password;
   double lat, lng;
   File file;
 
@@ -54,6 +55,10 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+                icon: Icon(Icons.cloud_upload), onPressed: () => uploadImage()),
+          ],
           backgroundColor: Colors.purple.shade700,
           title: Text('Register'),
         ),
@@ -132,6 +137,7 @@ class _RegisterState extends State<Register> {
     return Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => name = value.trim(),
           decoration: InputDecoration(
             hintText: 'Display Ur Name',
             prefixIcon: Icon(Icons.face, color: Color(0xffe81ee8)),
@@ -151,6 +157,7 @@ class _RegisterState extends State<Register> {
     return Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => user = value.trim(),
           decoration: InputDecoration(
             hintText: 'User Name',
             prefixIcon: Icon(Icons.account_box, color: Color(0xffe81ee8)),
@@ -170,6 +177,7 @@ class _RegisterState extends State<Register> {
     return Container(
         width: 250,
         child: TextField(
+          onChanged: (value) => password = value.trim(),
           decoration: InputDecoration(
             hintText: 'Ur Password',
             prefixIcon: Icon(Icons.keyboard, color: Color(0xffe81ee8)),
@@ -187,7 +195,8 @@ class _RegisterState extends State<Register> {
 
   Future<Null> chooseAvatar(ImageSource source) async {
     try {
-      var result = await ImagePicker().getImage(source: source,maxWidth: 800,maxHeight: 800);
+      var result = await ImagePicker()
+          .getImage(source: source, maxWidth: 800, maxHeight: 800);
       setState(() {
         file = File(result.path);
       });
@@ -218,5 +227,23 @@ class _RegisterState extends State<Register> {
         ],
       ),
     );
+  }
+
+  Future<Null> uploadImage() async {
+    print('name= $name usere =$user password=$password');
+    if (file == null) {
+      normalDialog(context, 'Pls choose Avatar');
+    } else if (name == null ||
+        name.isEmpty ||
+        user == null ||
+        user.isEmpty ||
+        password == null ||
+        password.isEmpty) {
+      normalDialog(context, 'Pls กรอกข้อมูลให้ครบนะครับ ไม่เอาค่าว่าง');
+    }else if (choosePosition==null) {
+      normalDialog(context, 'Pls กรอกข้อมูลให้ครบนะครับ Position');
+    }else{
+        
+    }
   }
 }
