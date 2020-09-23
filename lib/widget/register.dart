@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hello/utility/normal_dialog.dart';
@@ -240,10 +241,16 @@ class _RegisterState extends State<Register> {
         password == null ||
         password.isEmpty) {
       normalDialog(context, 'Pls กรอกข้อมูลให้ครบนะครับ ไม่เอาค่าว่าง');
-    }else if (choosePosition==null) {
+    } else if (choosePosition == null) {
       normalDialog(context, 'Pls กรอกข้อมูลให้ครบนะครับ Position');
-    }else{
-        
+    } else {
+      uploadThread();
     }
+  }
+
+  Future<Null> uploadThread() async {
+    await Firebase.initializeApp().then((value) {
+      print('Success Connaect');
+    });
   }
 }
