@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hello/model/usermodel.dart';
 import 'package:hello/utility/normal_dialog.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
@@ -274,5 +276,21 @@ class _RegisterState extends State<Register> {
     StorageUploadTask task = reference.putFile(file);
     urlPath = await (await task.onComplete).ref.getDownloadURL();
     print('Url Path=$urlPath');
+    inserDataToFirebase();
+  }
+
+  Future<Null> inserDataToFirebase() async {
+    UserModel model = UserModel(
+        name: name,
+        path: urlPath,
+        position: choosePosition,
+        lat: lat.toString(),
+        lng: lng.toString());
+    Map<String, dynamic> map = model.toJson();
+    await FirebaseFirestore.instance
+        .collection('UserTeam')
+        .doc(uid)
+        .set(map)
+        .then((value) => Navigator.pop(context));
   }
 }
